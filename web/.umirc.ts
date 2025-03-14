@@ -3,6 +3,30 @@ import TerserPlugin from 'terser-webpack-plugin';
 import { defineConfig } from 'umi';
 import { appName } from './src/conf.json';
 import routes from './src/routes';
+const fs = require('fs');
+const envFilePath = path.resolve(__dirname, '../docker/.env');
+console.log(envFilePath);
+
+let envDocker: any = {};
+
+try {
+  if (fs.existsSync(envFilePath)) {
+    const envContent = fs.readFileSync(envFilePath, 'utf8');
+    envDocker = envContent
+      .split('\n')
+      .filter((line: string) => line && !line.startsWith('#'))
+      .reduce((acc: any, line: string) => {
+        const [key, ...valueParts] = line.split('=');
+        if (key && valueParts.length > 0) {
+          acc[key.trim()] = valueParts.join('=').trim();
+        }
+        return acc;
+      }, {});
+  }
+} catch (error) {
+  console.error('Error loading .env file:', error);
+}
+console.log(envDocker);
 
 export default defineConfig({
   title: appName,
@@ -56,6 +80,6 @@ export default defineConfig({
   tailwindcss: {},
   define: {
     //get var on env forward to browser
-    HIDE_SIGNUP: process.env.HIDE_SIGNUP,
+    HIDE_SIGNUP: envDocker['HIDE_SIGNUP'] || '0',
   },
 });
