@@ -26,7 +26,6 @@ try {
 } catch (error) {
   console.error('Error loading .env file:', error);
 }
-console.log(envDocker);
 
 export default defineConfig({
   title: appName,
@@ -79,7 +78,7 @@ export default defineConfig({
   },
   tailwindcss: {},
   define: {
-    //get var on env forward to browser
+    ...envDocker,
     HIDE_SIGNUP: envDocker['HIDE_SIGNUP'] || '0',
   },
 });
