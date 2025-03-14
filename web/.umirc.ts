@@ -78,7 +78,6 @@ export default defineConfig({
   },
   tailwindcss: {},
   define: {
-    ...envDocker,
     HIDE_SIGNUP: envDocker['HIDE_SIGNUP'] || '0',
   },
 });
