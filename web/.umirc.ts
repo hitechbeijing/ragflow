@@ -54,4 +54,8 @@ export default defineConfig({
     return memo;
   },
   tailwindcss: {},
+  define: {
+    //get var on env forward to browser
+    HIDE_SIGNUP: process.env.HIDE_SIGNUP,
+  },
 });
