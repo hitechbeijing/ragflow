@@ -1,11 +1,10 @@
+import fs from 'fs';
 import path from 'path';
 import TerserPlugin from 'terser-webpack-plugin';
 import { defineConfig } from 'umi';
 import { appName } from './src/conf.json';
 import routes from './src/routes';
-const fs = require('fs');
 const envFilePath = path.resolve(__dirname, '../docker/.env');
-console.log(envFilePath);
 
 let envDocker: any = {};
 
@@ -26,6 +25,7 @@ try {
 } catch (error) {
   console.error('Error loading .env file:', error);
 }
+console.log(envDocker);
 
 export default defineConfig({
   title: appName,
